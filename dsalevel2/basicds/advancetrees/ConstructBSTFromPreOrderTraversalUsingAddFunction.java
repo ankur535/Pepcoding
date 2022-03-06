@@ -1,0 +1,81 @@
+package dsalevel2.basicds.advancetrees;
+
+import java.util.Scanner;
+
+public class ConstructBSTFromPreOrderTraversalUsingAddFunction {
+	public static Scanner scn = new Scanner(System.in);
+
+	public static class TreeNode {
+		int val = 0;
+		TreeNode left = null;
+		TreeNode right = null;
+
+		TreeNode(int val) {
+			this.val = val;
+		}
+	}
+
+	// input_section=================================================
+
+	public static void display(TreeNode node) {
+		if (node == null)
+			return;
+
+		StringBuilder sb = new StringBuilder();
+		sb.append((node.left != null ? node.left.val : "."));
+		sb.append(" -> " + node.val + " <- ");
+		sb.append((node.right != null ? node.right.val : "."));
+
+		System.out.println(sb.toString());
+
+		display(node.left);
+		display(node.right);
+
+	}
+
+	public static void solve() {
+		int n = scn.nextInt();
+		int[] pre = new int[n];
+		for (int i = 0; i < n; i++)
+			pre[i] = scn.nextInt();
+
+		TreeNode root = bstFromPreorder(pre);
+		display(root);
+	}
+
+	public static void main(String[] args) {
+		solve();
+	}
+
+	// write your code here
+
+	public static TreeNode addToBST(TreeNode node, int val) {
+
+		if (node == null) {
+			TreeNode nn = new TreeNode(val);
+			return nn;
+		}
+
+		if (node.val >= val) {
+			node.left = addToBST(node.left, val);
+		} else if (node.val < val) {
+			node.right = addToBST(node.right, val);
+		}
+
+		return node;
+
+	}
+
+	public static TreeNode bstFromPreorder(int[] preorder) {
+
+		// first element as root
+		TreeNode root = new TreeNode(preorder[0]);
+
+		// add all other element to bst
+		for (int i = 1; i < preorder.length; i++) {
+			root = addToBST(root, preorder[i]);
+		}
+
+		return root;
+	}
+}
