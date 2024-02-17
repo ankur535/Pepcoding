@@ -94,19 +94,19 @@ public class Goldmine {
     	
     	if (memo[i][j] != 0) return memo[i][j];
     	
-    	int ans = 0;
+    	int gold = 0;
     	
     	if (i-1 >= 0) {
-    		ans = Math.max(ans, rec_memo(i - 1, j + 1, n, m, grid, memo));
+    		gold = Math.max(gold, rec_memo(i - 1, j + 1, n, m, grid, memo));
     	}
     	
-    	ans = Math.max(ans, rec_memo(i, j + 1, n, m, grid, memo));
+    	gold = Math.max(gold, rec_memo(i, j + 1, n, m, grid, memo));
     	
     	if (i + 1 < n) {
-    		ans = Math.max(ans, rec_memo(i + 1, j + 1, n, m, grid, memo));
+    		gold = Math.max(gold, rec_memo(i + 1, j + 1, n, m, grid, memo));
     	}
     	
-    	return memo[i][j] = ans + grid[i][j];    	
+    	return memo[i][j] = gold + grid[i][j];    	
     }
 
 	// Recursion
@@ -116,20 +116,20 @@ public class Goldmine {
 			return grid[i][j];
 		}
 
-		int ans = 0;
+		int gold = 0;
 
 		// check only for i as j is already in range due to base case of j
 		if (i - 1 >= 0) {
-			ans = Math.max(ans, rec(i - 1, j + 1, n, m, grid));
+			gold = Math.max(gold, rec(i - 1, j + 1, n, m, grid));
 		}
 
-		ans = Math.max(ans, rec(i, j + 1, n, m, grid));
+		gold = Math.max(gold, rec(i, j + 1, n, m, grid));
 
 		if (i + 1 < n) {
-			ans = Math.max(ans, rec(i + 1, j + 1, n, m, grid));
+			gold = Math.max(gold, rec(i + 1, j + 1, n, m, grid));
 		}
 
-		return ans + grid[i][j];
+		return gold + grid[i][j];
 	}
 
 }
