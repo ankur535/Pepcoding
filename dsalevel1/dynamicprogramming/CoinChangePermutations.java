@@ -43,15 +43,15 @@ public class CoinChangePermutations {
     			continue;
     		}
     		
-    		int ans = 0;
+    		int count = 0;
     		
     		for (int idx = 0; idx < arr.length; idx++) {
     			if (tar - arr[idx] >= 0) {
-    				ans += dp[tar - arr[idx]];
+    				count += dp[tar - arr[idx]];
     			}    			
     		}
     		
-    		dp[tar] = ans;
+    		dp[tar] = count;
     	}
     	
     	return dp[Tar];
@@ -64,17 +64,19 @@ public class CoinChangePermutations {
     		return memo[tar] = 1;
     	}
     	
-    	if (memo[tar] != 0) return memo[tar];
+    	if (memo[tar] != 0) {
+    		return memo[tar];
+    	}
     	
-    	int ans = 0;
+    	int count = 0;
     	
     	for (int i = 0; i < arr.length; i++) {
     		if (tar - arr[i] >= 0) {
-    			ans += rec_memo(arr, tar - arr[i], memo);
+    			count += rec_memo(arr, tar - arr[i], memo);
     		}
     	}
     	
-    	return memo[tar] = ans;
+    	return memo[tar] = count;
     }
     
     //Recursion
@@ -84,14 +86,14 @@ public class CoinChangePermutations {
     		return 1;
     	}
     	
-    	int ans = 0;
+    	int count = 0;
     	
     	for (int i = 0; i < arr.length; i++) {
     		if (tar - arr[i] >= 0) {
-    			ans += rec(arr, tar - arr[i]);
+    			count += rec(arr, tar - arr[i]);
     		}
     	}
     	
-    	return ans;
+    	return count;
     }
 }
