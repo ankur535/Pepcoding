@@ -34,6 +34,8 @@ public class ZeroOneKnapsack {
     	}
     	
     	int ans = rec_memo(0, values, weights, cap, memo);
+    	
+    	int ans = rec_tab(values, weights, cap);
     	*/
     	
     	//moving from n to 0
@@ -122,6 +124,52 @@ public class ZeroOneKnapsack {
     	
     	return ans;
     }
+    
+    //Tabulation for 0 to n movement, will be filled bottom up
+    @SuppressWarnings("unused")
+	private static int rec_tab(int Cap, int[] values, int[] weights) {
+
+		int n = values.length;
+		
+		int[][] dp = new int[n+1][Cap+1];
+		
+		for (int idx = n; idx >= 0; idx--) {
+			for (int cap = 0; cap <= Cap; cap++) {
+				
+				if (idx == n) {
+					dp[idx][cap] = 0;
+					continue;
+				}
+				
+				if (cap == 0) {
+					dp[idx][cap] = 0;
+					continue;
+				}
+				
+				int maxp = 0;
+				
+				if (cap - weights[idx] >= 0) {
+					maxp = dp[idx+1][cap - weights[idx]] + values[idx];
+				}
+				
+				maxp = Math.max(maxp, dp[idx+1][cap]);
+				
+				dp[idx][cap] = maxp;
+			}
+		}
+
+
+		//Printing dp array
+		for (int[] m : dp) {
+			for (int i : m) {
+				System.out.print(i + " ");
+			}
+			System.out.println();
+		}
+
+		return dp[0][Cap];
+	}
+    
     
     //Memoization
     public static int rec_memo(int idx, int[] values, int[] weights, int cap, int[][] memo) {
