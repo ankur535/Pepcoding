@@ -2,7 +2,7 @@ package dsalevel1.dynamicprogramming;
 
 import java.util.*;
 
-public class ZeroOneKnapsack {
+public class FractionalKnapsack {
 
     public static void main(String[] args) throws Exception {
     	
@@ -25,57 +25,59 @@ public class ZeroOneKnapsack {
     	in.close();
     	
     	//moving from 0 to n
-    	//int ans = rec(0, values, weights, cap);
+    	//double ans = rec(0, values, weights, cap);
     	
     	/*
-    	int[][] memo = new int[n+1][cap+1];
-    	for (int[] m: memo) {
-    		Arrays.fill(m, -1);
+    	double[][] memo = new double[n+1][cap+1];
+    	for (double[] m: memo) {
+    		Arrays.fill(m, -1.0);
     	}
     	
-    	int ans = rec_memo(0, values, weights, cap, memo);
+    	double ans = rec_memo(0, values, weights, cap, memo);
     	
-    	int ans = rec_tab(values, weights, cap);
+    	double ans = rec_tab(values, weights, cap);
     	*/
     	
     	//moving from n to 0
-    	//int ans = rec2(n, values, weights, cap);
+    	//double ans = rec2(n, values, weights, cap);
     	
     	/*
-    	int[][] memo = new int[n+1][cap+1];
+    	double[][] memo = new double[n+1][cap+1];
     	for (int[] m: memo) {
-    		Arrays.fill(m, -1);
+    		Arrays.fill(m, -1.0);
     	}
     	
-    	int ans = rec_memo2(n, values, weights, cap, memo);
+    	double ans = rec_memo2(n, values, weights, cap, memo);
     	*/
     	
-    	int ans = rec_tab2(values, weights, cap);
+    	double ans = rec_tab2(values, weights, cap);
     	
     	System.out.println(ans);
     }
     
     //Tabulation
-    public static int rec_tab2(int[] values, int[] weights, int Cap) {
+    public static double rec_tab2(int[] values, int[] weights, int Cap) {
     	
     	int n = weights.length;
     	
-    	int[][] dp = new int[n+1][Cap+1];
+    	double[][] dp = new double[n+1][Cap+1];
     	
     	for (int idx = 0; idx <= n; idx++) {
     		for (int cap = 0; cap <= Cap; cap++) {
     			
     			if (idx == 0 || cap == 0) {
-    				dp[idx][cap] = 0;
+    				dp[idx][cap] = 0.0;
     				continue;
     			}
     			
-    			int ans = 0;
+    			double ans = 0.0;
     			
     			//include
     			if (cap - weights[idx - 1] >= 0) {
     				ans = dp[idx-1][cap - weights[idx - 1]] + values[idx - 1];
-    			}
+    			} else {
+    				ans = ((double)cap/weights[idx-1]) * values[idx-1];
+				}
     			
     			//don't include
     			ans = Math.max(ans, dp[idx - 1][cap]);
@@ -88,19 +90,21 @@ public class ZeroOneKnapsack {
     }
     
     //Memoization
-    public static int rec_memo2(int idx, int[] values, int[] weights, int cap, int[][] memo) {
+    public static double rec_memo2(int idx, int[] values, int[] weights, int cap, double[][] memo) {
     	
-    	if (idx == 0 || cap == 0) {
-    		return 0;
+    	if (idx == 0 || cap == 0.0) {
+    		return 0.0;
     	}
     	
-    	if (memo[idx][cap] != -1) return memo[idx][cap];
+    	if (memo[idx][cap] != -1.0) return memo[idx][cap];
     	
-    	int ans = 0;
+    	double ans = 0.0;
     	
     	if (cap - weights[idx-1] >= 0) {
     		ans = rec_memo2(idx - 1, values, weights, cap - weights[idx-1], memo) + values[idx-1];
-    	}
+    	} else {
+    		ans = ((double)cap/weights[idx-1]) * values[idx-1];
+		}
     	
     	ans = Math.max(ans, rec_memo2(idx - 1, values, weights, cap, memo));
     	
@@ -108,17 +112,19 @@ public class ZeroOneKnapsack {
     }
     
     //Recursion
-    public static int rec2(int idx, int[] values, int[] weights, int cap) {
+    public static double rec2(int idx, int[] values, int[] weights, int cap) {
     	
     	if (idx == 0 || cap == 0) {
-    		return 0;
+    		return 0.0;
     	}
     	
-    	int ans = 0;
+    	double ans = 0.0;
     	
     	if (cap - weights[idx-1] >= 0) {
     		ans = rec2(idx - 1, values, weights, cap - weights[idx-1]) + values[idx-1];
-    	}
+    	} else {
+    		ans = ((double)cap/weights[idx-1]) * values[idx-1];
+		}
     	
     	ans = Math.max(ans, rec2(idx - 1, values, weights, cap));
     	
@@ -127,29 +133,32 @@ public class ZeroOneKnapsack {
     
     //Tabulation for 0 to n movement, will be filled bottom up
     @SuppressWarnings("unused")
-	private static int rec_tab(int Cap, int[] values, int[] weights) {
+	private static double rec_tab(int Cap, int[] values, int[] weights) {
 
 		int n = values.length;
 		
-		int[][] dp = new int[n+1][Cap+1];
+		double[][] dp = new double[n+1][Cap+1];
 		
 		for (int idx = n; idx >= 0; idx--) {
 			for (int cap = 0; cap <= Cap; cap++) {
 				
 				if (idx == n) {
-					dp[idx][cap] = 0;
+					dp[idx][cap] = 0.0;
 					continue;
 				}
 				
 				if (cap == 0) {
-					dp[idx][cap] = 0;
+					dp[idx][cap] = 0.0;
 					continue;
 				}
 				
-				int maxp = 0;
+				double maxp = 0.0;
 				
+				//take same index, don't go ahead
 				if (cap - weights[idx] >= 0) {
 					maxp = dp[idx+1][cap - weights[idx]] + values[idx];
+				} else {
+					maxp = ((double)cap/weights[idx]) * values[idx];
 				}
 				
 				maxp = Math.max(maxp, dp[idx+1][cap]);
@@ -160,8 +169,8 @@ public class ZeroOneKnapsack {
 
 
 		//Printing dp array
-		for (int[] m : dp) {
-			for (int i : m) {
+		for (double[] m : dp) {
+			for (double i : m) {
 				System.out.print(i + " ");
 			}
 			System.out.println();
@@ -172,20 +181,22 @@ public class ZeroOneKnapsack {
     
     
     //Memoization
-    public static int rec_memo(int idx, int[] values, int[] weights, int cap, int[][] memo) {
+    public static double rec_memo(int idx, int[] values, int[] weights, int cap, double[][] memo) {
     	
     	if (cap == 0 || idx == weights.length) {
-    		return memo[idx][cap] = 0;
+    		return memo[idx][cap] = 0.0;
     	}
     	
-    	if (memo[idx][cap] != -1) return memo[idx][cap];
+    	if (memo[idx][cap] != -1.0) return memo[idx][cap];
     	
-    	int ans = 0;
+    	double ans = 0.0;
     	
     	//include
     	if (cap - weights[idx] >= 0) {
     		ans = rec_memo(idx + 1, values, weights, cap - weights[idx], memo) + values[idx];
-    	}
+    	} else {
+    		ans = ((double)cap/weights[idx]) * values[idx];
+		}
     	
     	//don't include
     	ans = Math.max(ans, rec_memo(idx + 1, values, weights, cap, memo));
@@ -194,22 +205,24 @@ public class ZeroOneKnapsack {
     }
     
     //Recursion
-    public static int rec(int idx, int[] values, int[] weights, int cap) {
+    public static double rec(int idx, int[] values, int[] weights, int cap) {
     	
     	if (cap == 0) {
-    		return 0;
+    		return 0.0;
     	}
     	
     	if (idx == weights.length) {
-    		return 0;
+    		return 0.0;
     	}
     	
-    	int ans = 0;
+    	double ans = 0.0;
     	
     	//include, on returning add the value for the included weight
     	if (cap - weights[idx] >= 0) {
     		ans = rec(idx + 1, values, weights, cap - weights[idx]) + values[idx];
-    	}
+    	} else {
+    		ans = ((double)cap/weights[idx]) * values[idx];
+		}
     	
     	//don't include, as not including so not adding the value for idx
     	ans = Math.max(ans, rec(idx + 1, values, weights, cap));

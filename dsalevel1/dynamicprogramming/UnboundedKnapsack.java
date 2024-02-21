@@ -2,7 +2,7 @@ package dsalevel1.dynamicprogramming;
 
 import java.util.*;
 
-public class ZeroOneKnapsack {
+public class UnboundedKnapsack {
 
     public static void main(String[] args) throws Exception {
     	
@@ -74,7 +74,7 @@ public class ZeroOneKnapsack {
     			
     			//include
     			if (cap - weights[idx - 1] >= 0) {
-    				ans = dp[idx-1][cap - weights[idx - 1]] + values[idx - 1];
+    				ans = dp[idx][cap - weights[idx - 1]] + values[idx - 1];
     			}
     			
     			//don't include
@@ -99,7 +99,7 @@ public class ZeroOneKnapsack {
     	int ans = 0;
     	
     	if (cap - weights[idx-1] >= 0) {
-    		ans = rec_memo2(idx - 1, values, weights, cap - weights[idx-1], memo) + values[idx-1];
+    		ans = rec_memo2(idx, values, weights, cap - weights[idx-1], memo) + values[idx-1];
     	}
     	
     	ans = Math.max(ans, rec_memo2(idx - 1, values, weights, cap, memo));
@@ -117,7 +117,7 @@ public class ZeroOneKnapsack {
     	int ans = 0;
     	
     	if (cap - weights[idx-1] >= 0) {
-    		ans = rec2(idx - 1, values, weights, cap - weights[idx-1]) + values[idx-1];
+    		ans = rec2(idx, values, weights, cap - weights[idx-1]) + values[idx-1];
     	}
     	
     	ans = Math.max(ans, rec2(idx - 1, values, weights, cap));
@@ -148,8 +148,9 @@ public class ZeroOneKnapsack {
 				
 				int maxp = 0;
 				
+				//take same index, don't go ahead
 				if (cap - weights[idx] >= 0) {
-					maxp = dp[idx+1][cap - weights[idx]] + values[idx];
+					maxp = dp[idx][cap - weights[idx]] + values[idx];
 				}
 				
 				maxp = Math.max(maxp, dp[idx+1][cap]);
@@ -184,7 +185,7 @@ public class ZeroOneKnapsack {
     	
     	//include
     	if (cap - weights[idx] >= 0) {
-    		ans = rec_memo(idx + 1, values, weights, cap - weights[idx], memo) + values[idx];
+    		ans = rec_memo(idx, values, weights, cap - weights[idx], memo) + values[idx];
     	}
     	
     	//don't include
@@ -208,7 +209,7 @@ public class ZeroOneKnapsack {
     	
     	//include, on returning add the value for the included weight
     	if (cap - weights[idx] >= 0) {
-    		ans = rec(idx + 1, values, weights, cap - weights[idx]) + values[idx];
+    		ans = rec(idx, values, weights, cap - weights[idx]) + values[idx];
     	}
     	
     	//don't include, as not including so not adding the value for idx
