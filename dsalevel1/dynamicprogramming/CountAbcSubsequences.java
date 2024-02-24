@@ -22,15 +22,20 @@ public class CountAbcSubsequences {
 		int sa = 0;
 		int sab = 0;
 		int sabc = 0;
+		
+		//For each character we have 2 options
+		//1. Append it or don't append it to previous value, so doing 2 * sa or 2 * sab or 2 * sabc
+		//2. it will append to previous string, like b will append to all values of a (so adding sa),
+		//and c will append behind ab value (so adding sab), for a it will addition of 1 for new value.
 
 		for (int i = 0; i < s.length(); i++) {
 
 			if (s.charAt(i) == 'a') {
-				sa = 1 + 2 * sa;
+				sa = 2 * sa + 1;
 			} else if (s.charAt(i) == 'b') {
-				sab = sa + 2 * sab;
+				sab = 2 * sab + sa;
 			} else if (s.charAt(i) == 'c') {
-				sabc = sab + 2 * sabc;
+				sabc = 2 * sabc + sab;
 			}
 		}
 
