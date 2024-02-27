@@ -64,22 +64,22 @@ public class PaintHouse {
 
 		int n = arr.length;
 
-		long dp[][] = new long[3][n];
+		long dp[][] = new long[n][3];
 
 		dp[0][0] = arr[0][0]; // red
-		dp[1][0] = arr[0][1]; // blue
-		dp[2][0] = arr[0][2]; // green
+		dp[0][1] = arr[0][1]; // blue
+		dp[0][2] = arr[0][2]; // green
 
 		for (int i = 1; i < n; i++) {
 
-			dp[0][i] = arr[i][0] + Math.min(dp[1][i - 1], dp[2][i - 1]); // red: dp of ith depend on arr value and min of green and blue i-1th value
-			dp[1][i] = arr[i][1] + Math.min(dp[0][i - 1], dp[2][i - 1]); // blue: dp of ith depend on arr value and min of green and red i-1th value
-			dp[2][i] = arr[i][2] + Math.min(dp[0][i - 1], dp[1][i - 1]); // green: dp of ith depend on arr value and min of red and blue i-1th value
+			dp[i][0] = arr[i][0] + Math.min(dp[i - 1][1], dp[i - 1][2]); // red: dp of ith depend on arr value and min of green and blue i-1th value
+			dp[i][1] = arr[i][1] + Math.min(dp[i - 1][0], dp[i - 1][2]); // blue: dp of ith depend on arr value and min of green and red i-1th value
+			dp[i][2] = arr[i][2] + Math.min(dp[i - 1][0], dp[i - 1][1]); // green: dp of ith depend on arr value and min of red and blue i-1th value
 
 		}
 
-		long ans = Math.min(dp[0][n - 1], dp[1][n - 1]);
-		ans = Math.min(ans, dp[0][n - 1]);
+		long ans = Math.min(dp[n - 1][0], dp[n - 1][1]);
+		ans = Math.min(ans, dp[n - 1][2]);
 
 		return ans;
 	}
