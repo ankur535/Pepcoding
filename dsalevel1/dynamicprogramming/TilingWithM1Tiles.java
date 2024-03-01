@@ -95,6 +95,7 @@ public class TilingWithM1Tiles {
 	//Recursion
 	public static int rec(int n, int m) {
 		
+		//use n < m instead of n == 0, it will be more effective and return 1 as only vertical way is possible then
 		if (n == 0) {
 			return 1;
 		}
