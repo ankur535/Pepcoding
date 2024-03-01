@@ -28,6 +28,7 @@ public class TilingWith21Tiles {
 	//Tabulation better, same as fibonacci
 	public static int tab_better(int n) {
 		
+		//This is nothing but fibonacci series with slight change
 		if (n == 1) return 1;
 		
 		int a = 1;	//for n == 0 case
