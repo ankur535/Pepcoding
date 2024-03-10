@@ -16,21 +16,21 @@ public class BuyAndSellStocksInfiniteTransactionsAllowed {
     	}
     	in.close();
     	
-    	int bp = 0;
-    	int sp;
+    	int bi = 0; // buying index
+    	int si;		//selling index
     	int totalProfit = 0;
     	
-    	for (sp = 1; sp < n; sp++) {
+    	for (si = 1; si < n; si++) {
     		
     		//whenever we start getting a depression in stock, sell it and buy again at new lower value
-    		if (prices[sp] < prices[sp-1]) {
-    			totalProfit += prices[sp - 1] - prices[bp];
-    			bp = sp;
+    		if (prices[si] < prices[si-1]) {
+    			totalProfit += prices[si - 1] - prices[bi];
+    			bi = si;
     		}
     	}
     	
     	//in the last if no depression found, then sell stock at last day or selling point
-    	totalProfit += prices[sp-1] - prices[bp];
+    	totalProfit += prices[si-1] - prices[bi];
     	System.out.println(totalProfit);
     }
 
