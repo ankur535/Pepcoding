@@ -16,8 +16,8 @@ public class BuyAndSellStocksInfiniteTransactionsAllowedMain {
     	}
     	in.close();
     	
-    	int dpi0 = 0;
-        int dpi1 = -(int)(1e9);
+    	int dpi0 = 0;	//track maximum profit
+        int dpi1 = -(int)(1e9); //Track how much profit left after buy at that point
         
         //here change is that we buy and sell stock multiple times
         //rather than buying only once
@@ -25,8 +25,8 @@ public class BuyAndSellStocksInfiniteTransactionsAllowedMain {
             
             int dpi_10 = dpi0;
             
-            dpi0 = Math.max(dpi0, dpi1 + prices[i]);
-            dpi1 = Math.max(dpi1, dpi_10 - prices[i]);            
+            dpi0 = Math.max(dpi0, dpi1 + prices[i]);	//if we sell, we will have dpi1(after buy remaining value) + prices[i]
+            dpi1 = Math.max(dpi1, dpi_10 - prices[i]);  //if we buy, we need to put out money from last total profit so dpi_10 - prices[i]
         }
         
         System.out.println(dpi0);
