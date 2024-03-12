@@ -24,12 +24,13 @@ public class BuyAndSellStocksWithTransactionFeeInfiniteTransactionsAllowed {
         //here change is that we buy and sell stock multiple times
         //rather than buying only once
         //put fee on buying the stock
+        //we can also put fees on selling the stock
         for (int i = 0; i < prices.length; i++) {
             
             int dpi_10 = dpi0;
             
-            dpi0 = Math.max(dpi0, dpi1 + prices[i]);
-            dpi1 = Math.max(dpi1, dpi_10 - prices[i] - fee);            
+            dpi0 = Math.max(dpi0, dpi1 + prices[i]);	//selling the stock
+            dpi1 = Math.max(dpi1, dpi_10 - prices[i] - fee);  //buying the stock
         }
         
         System.out.println(dpi0);
