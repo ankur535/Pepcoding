@@ -34,5 +34,26 @@ public class BuyAndSellStocksWithCooldownInfiniteTransactionAllowed {
         
         System.out.println(dpi0);
     }
+    
+    //other way to solve
+    private static int solution(int n, int[] arr) {
+
+		int buy = -arr[0];	//buy profit
+		int sell = 0;	//sell profit
+		int cp = 0;	//cooldown profit
+		
+		for (int i = 1; i < n; i++) {
+			
+			int oldsell = sell;
+			
+			sell = Math.max(sell, buy + arr[i]);
+			buy = Math.max(buy, cp - arr[i]);
+			cp = oldsell;
+		}
+		
+		return sell;
+		
+		
+	}
 
 }
