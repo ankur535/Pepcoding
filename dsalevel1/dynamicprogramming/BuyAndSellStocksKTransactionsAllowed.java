@@ -35,7 +35,11 @@ public class BuyAndSellStocksKTransactionsAllowed {
 			for (int k = 0; k <= K; k++) {
 				for (int x = 0; x < 2; x++) {
 
-					// base case when k == 0
+					//x == 0 denotes sell profit
+					//x == 1 denotes buy profit
+					//check previous questions to understand, pretty simple
+					
+					// base case when k == 0 (0th transaction)
 					if (k == 0) {
 						if (x == 0) {
 							dp[i][k][x] = 0;
@@ -43,7 +47,7 @@ public class BuyAndSellStocksKTransactionsAllowed {
 							dp[i][k][x] = -(int) (1e9);
 						}
 					} else {
-						// if i == 0, then depend on i = -1
+						// if i == 0, (1st day)
 						if (i == 0) {
 							if (x == 0) {
 								dp[i][k][x] = Math.max(0, -(int) (1e9) + prices[i]);
