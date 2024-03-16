@@ -67,18 +67,18 @@ public class ImplementTrie {
 		 */
 		public boolean startsWith(String prefix) {
 			//initial root node
-			TrieNode temp = root;
+			TrieNode node = root;
 
 			for (int i = 0; i < prefix.length(); i++) {
 				int index = prefix.charAt(i) - 'a';
 				
 				//if that char index for parent node children array is null, means
 				//starts with couldn't find and break in between
-				if (temp.children[index] == null) {
+				if (node.children[index] == null) {
 					return false;
 				}
 
-				temp = temp.children[index];
+				node = node.children[index];
 			}
 			//once end of string reached, means return true
 			return true;
