@@ -6,11 +6,11 @@ public class ImplementTrie {
 	public static class Trie {
 		
 		public static class TrieNode {
-			boolean isEnd;
 			TrieNode[] children;
+			boolean isEndOfWord;
 
 			public TrieNode() {
-				isEnd = false;
+				isEndOfWord = false;
 				// 26 size for 26 (a-z) characters
 				children = new TrieNode[26];
 			}
@@ -26,40 +26,40 @@ public class ImplementTrie {
 		/** Inserts a word into the trie. */
 		public void insert(String word) {
 			//initial root node
-			TrieNode temp = root;
+			TrieNode node = root;
 
 			for (int i = 0; i < word.length(); i++) {
-				char ch = word.charAt(i);
+				int index = word.charAt(i) - 'a';
 				
 				//if that char index for parent node children array is null, add empty node
-				if (temp.children[ch - 'a'] == null) {
-					temp.children[ch - 'a'] = new TrieNode();
+				if (node.children[index] == null) {
+					node.children[index] = new TrieNode();
 				}
 
-				temp = temp.children[ch - 'a'];
+				node = node.children[index];
 			}
 
-			temp.isEnd = true;
+			node.isEndOfWord = true;
 		}
 
 		/** Returns if the word is in the trie. */
 		public boolean search(String word) {
 			//initial root node
-			TrieNode temp = root;
+			TrieNode node = root;
 
 			for (int i = 0; i < word.length(); i++) {
-				char ch = word.charAt(i);
+				int index = word.charAt(i) - 'a';
 				
 				//if that char index for parent node children array is null, means
 				//string couldn't find and break in between
-				if (temp.children[ch - 'a'] == null) {
+				if (node.children[index] == null) {
 					return false;
 				}
 
-				temp = temp.children[ch - 'a'];
+				node = node.children[index];
 			}
 			//once end of string reached, check for isEnd of last character
-			return temp.isEnd;
+			return node.isEndOfWord;
 		}
 
 		/**
@@ -70,15 +70,15 @@ public class ImplementTrie {
 			TrieNode temp = root;
 
 			for (int i = 0; i < prefix.length(); i++) {
-				char ch = prefix.charAt(i);
+				int index = prefix.charAt(i) - 'a';
 				
 				//if that char index for parent node children array is null, means
 				//starts with couldn't find and break in between
-				if (temp.children[ch - 'a'] == null) {
+				if (temp.children[index] == null) {
 					return false;
 				}
 
-				temp = temp.children[ch - 'a'];
+				temp = temp.children[index];
 			}
 			//once end of string reached, means return true
 			return true;
